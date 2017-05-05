@@ -2,7 +2,10 @@
 title: "Titanic"
 author: "Chinki"
 date: "April 10, 2017"
-output: word_document
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
 ---
 Titanic Machine learning from Disaster.
 
@@ -21,14 +24,17 @@ ticket	Ticket number
 fare	Passenger fare	
 cabin	Cabin number	
 embarked	Port of Embarkation	C = Cherbourg, Q = Queenstown, S = Southampton
-
-```{r}
-# Reading data
-Titanic_traning=read.csv("C:/Users/chink/Documents/train.csv")
-Titanic_test=read.csv("C:/Users/chink/Documents/test.csv")
+```{r getwd, echo=FALSE}
+wd <- getwd()
 ```
-Data exploring and preparing 
 
+```{r Read_data}
+# Reading data
+Titanic_traning=read.csv(file.path(wd, "train.csv"))
+Titanic_test=read.csv(file.path(wd, "test.csv"))
+```
+
+Data exploring and preparing 
 ```{r}
 #No of male and Females in titanic training data 
 table(Titanic_traning$Sex,Titanic_traning$Survived,Titanic_traning$Pclass)
@@ -51,12 +57,10 @@ str(Titanic_traning)
 ```{r}
 Titanic_traning$Survived=factor(Titanic_traning$Survived,levels = c("0","1"),labels = c("survived","notsurvived"))
 ```
+
 ```{r}
 #checking for missing values 
 sapply(Titanic_traning,function(x) sum(is.na(x)))
-```
-```{r}
-help("sapply")
 ```
 
 ```{r}
@@ -101,7 +105,5 @@ anova(result,test = "Chisq")
 
 ```{r}
 predict=predict(result,newdata = subset(Titanic_test,select=c(2,4,5,6,7,8,9,10,11)))
-
-
 ```
 
