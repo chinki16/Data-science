@@ -1,0 +1,73 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+#Installing tidyverse package and calling library
+library(tidyverse)
+
+# Using iris dataset for visualisation
+# Details of iris data https://en.wikipedia.org/wiki/Iris_flower_data_set
+iris
+```
+```{r}
+# Plotting Sepal.Width vrs Sepal length by species
+ggplot(data=iris)+geom_point(mapping = aes(x=Sepal.Length,y=Sepal.Width,color=Species))
+```
+```{r}
+# Plotting petal.Width vrs Sepal width by species
+ggplot(data=iris)+geom_point(mapping = aes(x=Petal.Length,y=Petal.Width,color=Species))
+```
+```{r}
+# Plotting Petal Length vrs Sepal length by species
+ggplot(data=iris)+geom_point(mapping = aes(x=Sepal.Length,y=Petal.Length,color=Species))
+```
+```{r}
+# Plotting Petal Width vrs Sepal width by species
+ggplot(data=iris)+geom_point(mapping = aes(x=Sepal.Width,y=Petal.Width,color=Species))
+```
+```{r}
+ggplot(data=iris)+geom_point(mapping = aes(x=Sepal.Width,y=Petal.Width,color=Species))+facet_wrap(~Species)
+```
+```{r}
+ggplot(data=iris)+geom_smooth(mapping = aes(x=Sepal.Width,y=Petal.Width,color=Species))
+
+```
+```{r}
+library(yarrr)
+```
+
+
+```{r}
+head(iris)
+```
+```{r}
+pirateplot(formula = Sepal.Length ~ Species,               
+           data = iris,                       
+           main = "Pirateplot of sepal length  by Species ",
+           pal = "pony",                         
+           theme = 3) 
+```
+```{r}
+pirateplot(formula = Sepal.Width ~ Species,               
+           data = iris,                       
+           main = "Pirateplot of sepal length  by Species ",
+           pal = "pony",                         
+           theme = 3) 
+```
+```{r}
+pirateplot(formula = Petal.Length ~ Species,               
+           data = iris,                       
+           main = "Pirateplot of sepal length  by Species ",
+           pal = "pony",                         
+           theme = 3) 
+```
+```{r}
+pirateplot(formula = Petal.Width ~ Species,               
+           data = iris,                       
+           main = "Pirateplot of sepal length  by Species ",
+           pal = "pony",                         
+           theme = 3) 
+```
+
