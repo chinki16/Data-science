@@ -1,0 +1,87 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+#Reading the data
+insurance=read.csv("http://www.sci.csueastbay.edu/~esuess/classes/Statistics_6620/Presentations/ml10/insurance.csv")
+View(insurance)
+```
+```{r}
+#Filtering female from insurance dataset
+library(tidyverse)
+filter(insurance,sex=="female")
+```
+```{r}
+#Filtering male smokers
+filter(insurance,sex=="male",smoker=="yes")
+```
+
+```{r}
+#selecting sex, bmi,children and smoker.
+select(insurance,sex,bmi,children,smoker)
+```
+
+```{r}
+#Selcting column from sex to smoker 
+select(insurance,sex:smoker)
+```
+```{r}
+#Selecting column except sex to bmi
+select(insurance,-(sex:smoker))
+```
+```{r}
+#Filtering age between 20 to 40
+filter(insurance,age>=20,age<=40)
+```
+```{r}
+#Selecting age, sex and everything else 
+select(insurance,age,sex,everything())
+```
+
+
+```{r}
+#Renaming name of column name 
+rename(insurance,region=Region)
+```
+```{r}
+# Arranging age in decending order
+arrange(insurance,desc(age))
+```
+```{r}
+# Arranging age in accending order
+arrange(insurance,age)
+```
+```{r}
+# Arranging sex and age 
+arrange(insurance,age,sex)
+```
+```{r}
+#Adding more variables in the dataset
+#Adding expenses sqrt in the dataset
+mutate(insurance,expenses_sqrt=sqrt(expenses))
+```
+```{r}
+#Transmitting new added variable
+transmute(insurance,expenses_sqrt=sqrt(expenses))
+```
+
+```{r}
+#Grouping by age and selecting children 3 only
+group_sex=group_by(insurance,age)
+summarise(group_sex,children=3)
+```
+```{r}
+#Average age of the age group of insurance data
+summarise(insurance,age_g=mean(age,na.rm = T))
+
+# mean(insurance$age) is doing same work
+```
+```{r}
+#Average age group of smoker and non smoker 
+by_smoker=group_by(insurance,smoker)
+summarise(by_smoker,age_g=mean(age,na.rm = T))
+```
+
+
