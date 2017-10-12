@@ -1,0 +1,98 @@
+---
+title: "R Notebook"
+output:
+  html_notebook: default
+  html_document:
+    df_print: paged
+  word_document: default
+---
+
+In this Project,we are going to observe the time difference between querying the database with the SQL Syntax and querying the database with the dplyr syntax.  
+
+```{r}
+#Creating con in-memory RSQLite database
+library(dplyr)
+library(RSQLite)
+con <- dbConnect(RSQLite::SQLite(), dbname = ":memory:")
+
+#Coping flight dataset from R library to RSQlite database
+copy_to(con, nycflights13::flights, "flights",
+        temporary = FALSE, 
+        indexes = list(
+          c("year", "month", "day"), 
+          "carrier", 
+          "tailnum",
+          "dest"
+        )
+)
+```
+
+```{r}
+dbListTables(con)
+```
+```{r}
+#Column variables of the flights dataset
+dbListFields(con, "flights")
+```
+```{r}
+#Reading the dataset
+dbReadTable(con,"flights")
+```
+```{r}
+#Selecting the month where month=1 from the SQL syntax
+start=proc.time()
+request=dbSendQuery(con, "SELECT * FROM flights WHERE month = 1")
+dbFetch(request)
+sleep_for_a_minute <- function() { Sys.sleep(60) }
+time=proc.time()-start
+time
+
+
+```
+We will use elapsed time for data analysis.
+time=0.60 Sec
+Using Dplyr
+```{r}
+#Selecting the month where month=1 from the dplyr syntax
+library(nycflights13)
+library(tidyverse)
+start_1=proc.time()
+filter(flights,month==1)
+dplyr_filtertime=proc.time()-start_1
+dplyr_filtertime
+```
+Time=0.30 sec
+```{r}
+#Selecting month, year and day from SQL syntax
+start=proc.time()
+request=dbSendQuery(con, "SELECT month, year, day FROM flights ")
+dbFetch(request)
+sleep_for_a_minute <- function() { Sys.sleep(60) }
+time=proc.time()-start
+time
+
+```
+Time=0.45 Sec
+```{r}
+#Selecting month, year and day from dplyr syntax
+library(nycflights13)
+library(tidyverse)
+start_1=proc.time()
+select(flights,month ,year,day)
+dplyr_filtertime=proc.time()-start_1
+dplyr_filtertime
+```
+Time=0.18 Sec
+
+                     	 
+Selecting a value from column(SQL Syntax(Time in Sec))	         0.60	            
+
+Selecting a value from column(dplyr Syntax(Time in Sec))         0.30
+
+Selecting 3 columns ((SQL Syntax(Time in Sec))	                 0.45	            
+
+Selecting 3 columns ((dplyr Syntax(Time in Sec))	               0.18
+
+
+
+
