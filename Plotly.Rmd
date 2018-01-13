@@ -1,0 +1,10 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(leaflet)
+map=leaflet() %>% addTiles() %>% addMarkers(lng = -122.4194,lat = 37.77,popup = "San Francisco")
+map
+```
+
