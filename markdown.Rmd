@@ -1,0 +1,264 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+#Importing the documents 
+library(readr)
+train <- read_csv("C:/Users/chink/Google Drive/Computational Statistics/Kaggle/Jan2018/train.csv")
+
+test <- read_csv("C:/Users/chink/Google Drive/Computational Statistics/Kaggle/Jan2018/test.csv")
+```
+
+```{r}
+#Checking for header
+head(train)
+```
+
+
+```{r}
+#Structure of the data
+str(train)
+```
+```{r}
+#Structure of test dataset
+str(test)
+```
+```{r}
+#Summary of training and test data
+summary(train)
+```
+```{r}
+summary(test)
+```
+
+```{r}
+#Checking for missing value
+library(Amelia)
+missmap(train)
+```
+From the plot, we can observe that no missing information in training dataset.
+
+```{r}
+#Checking for missing data in test
+library(Amelia)
+
+missmap(test)
+```
+
+No missing data.
+
+```{r}
+library(gridExtra)
+library(ggplot2)
+p1=ggplot(train,aes(x=percent_atom_al))+geom_histogram(col="red",aes(fill=..count..))+ scale_fill_gradient("Count", low = "green", high = "blue")+labs(title="Histogram for percent_atom_al")
+
+p2=ggplot(train,aes(x=percent_atom_ga))+geom_histogram(col="red",aes(fill=..count..))+ scale_fill_gradient("Count", low = "green", high = "blue")+labs(title="Histogram for percent_atom_ga")
+
+p3=ggplot(train,aes(x=percent_atom_in))+geom_histogram(col="red",aes(fill=..count..))+ scale_fill_gradient("Count", low = "green", high = "blue")+labs(title="Histogram for percent_atom_in")
+
+p4=ggplot(train,aes(x=lattice_vector_1_ang))+geom_histogram(col="red",aes(fill=..count..))+ scale_fill_gradient("Count", low = "green", high = "blue")+labs(title="Histogram for lattice_vector_1_ang")
+
+p5=ggplot(train,aes(x=lattice_vector_2_ang))+geom_histogram(col="red",aes(fill=..count..))+ scale_fill_gradient("Count", low = "green", high = "blue")+labs(title="Histogram for lattice_vector_2_ang")
+
+p6=ggplot(train,aes(x=lattice_vector_3_ang))+geom_histogram(col="red",aes(fill=..count..))+ scale_fill_gradient("Count", low = "green", high = "blue")+labs(title="Histogram for lattice_vector_3_ang")
+
+p7=ggplot(train,aes(x=lattice_angle_alpha_degree))+geom_histogram(col="red",aes(fill=..count..),breaks=seq(80,110,by=1))+ scale_fill_gradient("Count", low = "green", high = "blue")+labs(title="Histogram for lattice_angle_alpha_degree")
+
+p8=ggplot(train,aes(x=lattice_angle_beta_degree))+geom_histogram(col="red",aes(fill=..count..),breaks=seq(80,110,by=1))+ scale_fill_gradient("Count", low = "green", high = "blue")+labs(title="Histogram for lattice_angle_beta_degree")
+
+p9=ggplot(train,aes(x=lattice_angle_gamma_degree))+geom_histogram(col="red",aes(fill=..count..),breaks=seq(80,110,by=1))+ scale_fill_gradient("Count", low = "green", high = "blue")+labs(title="Histogram for lattice_angle_gamma_degree")
+
+p10=ggplot(train,aes(x=formation_energy_ev_natom))+geom_histogram(col="red",aes(fill=..count..))+ scale_fill_gradient("Count", low = "green", high = "blue")+labs(title="Histogram for formation_energy_ev_natom")
+
+grid.arrange(p1,p2,p3,p4,ncol=2,nrow=2)
+
+```
+
+```{r}
+grid.arrange(p5,p6,ncol=2,nrow=1)
+```
+```{r}
+grid.arrange(p7,p8,ncol=2,nrow=1)
+```
+```{r}
+grid.arrange(p9,p10,ncol=2,nrow=1)
+```
+```{r}
+#Converting variables as factor 
+train$spacegroup=as.factor(train$spacegroup)
+train$number_of_total_atoms=as.factor(train$number_of_total_atoms)
+```
+
+```{r}
+
+#Scatterplot of varaibles
+s1=ggplot(train,aes(percent_atom_al,percent_atom_ga,col=spacegroup))+geom_point()+geom_smooth()+facet_wrap(~number_of_total_atoms)
+
+s2=ggplot(train,aes(percent_atom_al,percent_atom_in,col=spacegroup))+geom_point()+geom_smooth()+facet_wrap(~number_of_total_atoms)
+
+s3=ggplot(train,aes(percent_atom_ga,percent_atom_in,col=spacegroup))+geom_point()+geom_smooth()+facet_wrap(~number_of_total_atoms)
+
+s1
+s2
+s3
+```
+```{r}
+#Plot
+s4=ggplot(train,aes(percent_atom_ga,bandgap_energy_ev,col=spacegroup))+geom_point()+facet_wrap(~number_of_total_atoms)
+s4
+```
+
+```{r}
+#plots
+s5=ggplot(train,aes(percent_atom_al,bandgap_energy_ev,col=spacegroup))+geom_point()+facet_wrap(~number_of_total_atoms)
+s5
+```
+
+```{r}
+#plots
+s6=ggplot(train,aes(percent_atom_in,bandgap_energy_ev,col=spacegroup))+geom_point()+facet_wrap(~number_of_total_atoms)
+s6
+
+```
+```{r}
+#plots
+s7=ggplot(train,aes(lattice_vector_1_ang,bandgap_energy_ev,col=spacegroup))+geom_point()+facet_wrap(~number_of_total_atoms)
+s7
+```
+```{r}
+#plots
+s8=ggplot(train,aes(lattice_vector_2_ang,bandgap_energy_ev,col=spacegroup))+geom_point()+facet_wrap(~number_of_total_atoms)
+s8
+```
+```{r}
+#plots
+s9=ggplot(train,aes(lattice_vector_3_ang,bandgap_energy_ev,col=spacegroup))+geom_point()+facet_wrap(~number_of_total_atoms)
+s9
+```
+```{r}
+#plots
+s10=ggplot(train,aes(lattice_angle_alpha_degree,bandgap_energy_ev,col=spacegroup))+geom_point()+facet_wrap(~number_of_total_atoms)
+s10
+```
+```{r}
+#plots
+s11=ggplot(train,aes(lattice_angle_beta_degree,bandgap_energy_ev,col=spacegroup))+geom_point()+facet_wrap(~number_of_total_atoms)
+s11
+```
+```{r}
+#plots
+s12=ggplot(train,aes(lattice_angle_gamma_degree,bandgap_energy_ev,col=spacegroup))+geom_point()+facet_wrap(~number_of_total_atoms)
+s12
+```
+```{r}
+#plots
+s13=ggplot(train,aes(formation_energy_ev_natom,bandgap_energy_ev,col=spacegroup))+geom_point()+facet_wrap(~number_of_total_atoms)
+s13
+```
+
+```{r}
+#Subsetting the data by spacegroup
+spacegroup33= train[which(train$spacegroup == "33"),]
+summary(spacegroup33)
+```
+```{r}
+#Subsetting the data by spacegroup
+spacegroup12= train[which(train$spacegroup == "12"),]
+summary(spacegroup12)
+```
+
+```{r}
+#Subsetting the data by spacegroup
+spacegroup167= train[which(train$spacegroup == "167"),]
+summary(spacegroup167)
+```
+```{r}
+#Subsetting the data by spacegroup
+spacegroup194= train[which(train$spacegroup == "194"),]
+summary(spacegroup194)
+```
+```{r}
+#Subsetting the data by spacegroup
+spacegroup206= train[which(train$spacegroup == "206"),]
+summary(spacegroup206)
+```
+```{r}
+#Subsetting the data by spacegroup
+spacegroup227= train[which(train$spacegroup == "227"),]
+summary(spacegroup227)
+```
+```{r}
+#Investigate the bandgap_energy_ev of diamonds using box plots
+ggplot(train,aes(factor(spacegroup),bandgap_energy_ev,fill=spacegroup))+geom_boxplot()
+```
+```{r}
+#Investigate the bandgap_energy_ev of diamonds using box plots
+ggplot(train,aes(factor(number_of_total_atoms),bandgap_energy_ev,fill=number_of_total_atoms))+geom_boxplot()
+```
+```{r}
+#Table
+head(sort(table(train$spacegroup),decreasing = T))
+```
+```{r}
+#Table
+head(sort(table(train$number_of_total_atoms),decreasing = T))
+```
+
+```{r}
+#mtcars is a data frame 
+library(corrplot)
+train$spacegroup=as.numeric(train$spacegroup)
+train$number_of_total_atoms=as.numeric(train$number_of_total_atoms)
+t=cor(train)
+corrplot(t, order = "AOE")
+
+```
+```{r}
+#Step function
+full=lm(bandgap_energy_ev~.-(spacegroup+number_of_total_atoms+id+formation_energy_ev_natom)+factor(spacegroup)+factor(number_of_total_atoms),data=train)
+null=lm(bandgap_energy_ev~1,data=train)
+step(null, scope=list(lower=null, upper=full),
+direction="forward")
+
+```
+Low AIC model is lm(formula = bandgap_energy_ev ~ percent_atom_in + factor(spacegroup) + 
+    percent_atom_ga + lattice_angle_alpha_degree + factor(number_of_total_atoms) + 
+    lattice_vector_1_ang + lattice_vector_3_ang + percent_atom_al + 
+    lattice_angle_beta_degree, data = train)
+
+    
+```{r}
+#Linear Regression model
+train$spacegroup=as.factor(train$spacegroup)
+train$number_of_total_atoms=as.factor(train$number_of_total_atoms)
+m1=lm(formula = bandgap_energy_ev ~ percent_atom_in + factor(spacegroup) + 
+    percent_atom_ga + lattice_angle_alpha_degree + factor(number_of_total_atoms) + 
+    lattice_vector_1_ang + lattice_vector_3_ang + percent_atom_al + 
+    lattice_angle_beta_degree, data = train)
+
+summary(m1)
+```
+```{r}
+#Checking model dignostics 
+r=residuals(m1)
+plot(r,col="green")
+```
+ Plot of residuals are scattered around. Errors are normaliy distributed.
+ 
+```{r}
+# Normality test
+shapiro.test(r) 
+
+```
+ 
+As w>95%. Normality assumption is satisfied.
+```{r}
+#Removing id colunm
+test=test[-1,]
+test$spacegroup=as.factor(test$spacegroup)
+test$number_of_total_atoms=as.factor(test$number_of_total_atoms)
+
+```
+
