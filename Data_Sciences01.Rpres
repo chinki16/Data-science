@@ -1,0 +1,187 @@
+Data_Sciences
+========================================================
+author: Chinki
+date: 26 Feb 2016
+autosize: true
+
+
+========================================================
+Question-01
+
+How can you generate a random number between 1 - 7 with only a die? 
+
+Chinki's Solution
+
+Random numbers should have equally likely probability to come.
+so roll dice twice and take sum, exclude numbers more than.
+
+
+========================================================
+Question-02
+
+In any 15-minute interval, there is a 20% probability that you will see at least one shooting star. What is the probability that you see at least one shooting star in the period of an hour? 
+
+Chinki's Solution
+
+This is example of poisson distribution. with lamda=15 mint
+Shooting start
+p(x>=1)= 1-P(x<1) = 1 - P(x=0) = 1 - (0.8)^4 =0.5904
+
+
+====================================================================
+Question-03
+
+How can you get a fair coin toss if someone hands you a coin that is weighted to come up heads more often than tails? 
+
+Chinki's Solution
+
+I will generate random 10 trails and figure out how much is weighted to head.
+
+=========================================================================
+Question-04
+
+You have a 50-50 mixture of two normal distributions with the same standard deviation. How far apart do the means need to be in order for this distribution to be bimodal? 
+
+Chinki's Solution
+Binomial distribution can be approached to normal if n is large.
+mean of binomail=np
+
+mean of 50-50 mixture = n1p1+n2p2 = 
+
+
+======================================================================
+Question-05
+
+A certain couple tells you that they have two children, at least one of which is a girl. What is the probability that they have two girls? 
+
+Chinki's Solution
+
+This is conditional probabilty problem
+s ={BB, BG, GB, GG }
+p=1/3
+
+======================================================================
+Question-06
+
+You call 2 UberX's and 3 Lyfts. If the time that each takes to reach you is IID, what is the probability that all the Lyfts arrive first? What is the probability that all the UberX's arrive first?
+
+Chinki's Solution
+Total=5
+p( 1st car is lift)=3/5
+p( 2nd is also lift)=2/4
+P( 3rd is also lift)=1/3
+and is used
+
+
+==============================================================================
+
+Question-07
+
+On a dating site, users can select 5 out of 24 adjectives to describe themselves. A match is declared between two users if they match on at least 4 adjectives. If Alice and Bob randomly pick adjectives, what is the probability that they form a match? 
+
+Chinki's Solution
+
+
+
+
+==================================================================================
+
+Question-08
+
+A lazy high school senior types of application and envelopes to n different colleges, but puts the applications randomly into the envelopes. What is the expected number of applications that went to the right college 
+
+Chinki's Solution
+P(correct envelope)=1/n=X
+Correct envelope= sum(X)
+E(Y)=n.E(X)=n*1/n = 1
+
+====================================================================================
+
+Question-09
+
+Let's say you have a very tall father. On average, what would you expect the height of his son to be? Taller, equal, or shorter? What if you had a very short father.
+
+Chinki's Solution
+Galton dataset
+
+=======================================================================================
+
+Question-10
+
+What is a confidence interval and how do you interpret it? 
+
+
+
+=======================================================================================
+
+Question-11
+
+What is unbiasedness as a property of an estimator? Is this always a desirable property when performing inference? What about in data analysis or predictive modeling?
+
+
+
+======================================================================================
+
+Question-12
+
+What's the difference between a MAP, MOM, MLE estimator? In which cases would you want to use each? 
+
+
+=======================================================================================
+
+Question-13
+
+What is a p-value? What is the difference between type-1 and type-2 error? 
+
+
+
+=====================================================================================
+
+Question-14
+
+What is logistic Regression and what is linear regression?
+
+
+====================================================================================
+
+Question-15
+
+which variables will you use if two variables are highly correlated and dependent in logistic regression?
+
+
+====================================================================================
+
+Question-16
+
+Can you please explain to me the difference between a parametric and non-parametric test as if I did not know anything about it?
+
+
+
+==================================================================================
+
+Question-17
+
+What are the different ways to find the error in predictive models?
+
+
+===================================================================================
+
+Question-18
+
+How do you explain SD to a common man?
+
+
+==================================================================================
+
+Question-19
+
+
+
+
+
+
+
+
+
+
+
